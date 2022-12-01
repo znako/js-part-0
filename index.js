@@ -7,7 +7,7 @@ const testBlock = (name) => {
 
 const areEqual = (a, b) => {
     return a === b;
-    // Compare also arrays of primitives
+    // Compare arrays of primitives
     // Remember: [] !== []
 }
 
