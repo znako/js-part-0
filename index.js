@@ -5,20 +5,14 @@ const testBlock = (name) => {
     console.group(`# ${name}\n`);
 }
 
-// For primitives and arrays of primitives only
+const areEqual = (a, b) => {
+    return a === b;
+    // Compare also arrays of primitives
+    // Remember: [] !== []
+}
+
 const test = (whatWeTest, actualResult, expectedResult) => {
-    let testPassed = false;
-
-    // Set testPassed = true if actualResult
-    // and expectedResult are strict equal
-    if (actualResult === expectedResult) {
-        testPassed = true;
-    } else {
-        // Compare arrays of primitives
-        // Remember: [] !== []
-    }
-
-    if (testPassed) {
+    if (areEqual(actualResult, expectedResult)) {
         console.log(`[OK] ${whatWeTest}\n`);
     } else {
         console.log(`[FAIL] ${whatWeTest}`);
@@ -60,6 +54,13 @@ const everyItemHasAUniqueRealType = (arr) => {
     // Return true if there are no items in array
     // with the same real type
 };
+
+const countRealTypes = (arr) => {
+    // Return an array of arrays with a type and count of items
+    // with this type in the input array, sorted by type.
+    // Like an Object.entries() result: [['boolean', 3], ['string': 5]]
+};
+
 
 // Tests
 
@@ -161,6 +162,41 @@ test(
     'There are no repeated types in knownTypes',
     everyItemHasAUniqueRealType(knownTypes),
     true
+);
+
+
+testBlock('countRealTypes');
+
+test(
+    'Count unique types of array items',
+    countRealTypes([
+        true,
+        null,
+        !null,
+        !!null,
+        {},
+    ]),
+    [
+        ['boolean', 3],
+        ['null', 1],
+        ['object', 1],
+    ]
+);
+
+test(
+    'Counted unique types are sorted',
+    countRealTypes([
+        {},
+        null,
+        true,
+        !null,
+        !!null,
+    ]),
+    [
+        ['boolean', 3],
+        ['null', 1],
+        ['object', 1],
+    ]
 );
 
 // Add several positive and negative tests
