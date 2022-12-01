@@ -58,7 +58,7 @@ const everyItemHasAUniqueRealType = (arr) => {
 const countRealTypes = (arr) => {
     // Return an array of arrays with a type and count of items
     // with this type in the input array, sorted by type.
-    // Like an Object.entries() result: [['boolean', 3], ['string': 5]]
+    // Like an Object.entries() result: [['boolean', 3], ['string', 5]]
 };
 
 
