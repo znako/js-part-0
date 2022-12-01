@@ -72,4 +72,10 @@ https://t.me/ipetropolsky, i.petropolsky@hh.ru
   [OK] Two values have the same type
   
   [OK] There are no repeated types in knownTypes
+  
+# countRealTypes
+
+  [OK] Count unique types of array items
+  
+  [OK] Counted unique types are sorted
 ```
