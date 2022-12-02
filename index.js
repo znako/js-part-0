@@ -15,11 +15,11 @@ const test = (whatWeTest, actualResult, expectedResult) => {
     if (areEqual(actualResult, expectedResult)) {
         console.log(`[OK] ${whatWeTest}\n`);
     } else {
-        console.log(`[FAIL] ${whatWeTest}`);
-        console.log('Expected:');
-        console.log(expectedResult);
-        console.log('Actual:');
-        console.log(actualResult);
+        console.error(`[FAIL] ${whatWeTest}`);
+        console.debug('Expected:');
+        console.debug(expectedResult);
+        console.debug('Actual:');
+        console.debug(actualResult);
         console.log('');
     }
 }
