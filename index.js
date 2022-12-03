@@ -40,10 +40,14 @@ const allItemsHaveTheSameType = (arr) => {
 };
 
 const getRealType = (value) => {
-    // Return string with a real type of value like
-    // 'string', 'null', 'array', 'date', etc.
-    // Use typeof, instanceof and some magic
-    return 'unknown';
+    // Return string with a “real” type of value.
+    // For example:
+    //     typeof new Date()       // 'object'
+    //     getRealType(new Date()) // 'date'
+    //     typeof NaN              // 'number'
+    //     getRealType(NaN)        // 'NaN'
+    // Use typeof, instanceof and some magic. It's enough to have
+    // 12-13 unique types but you can find out in JS even more :)
 }
 
 const getRealTypesOfItems = (arr) => {
@@ -78,13 +82,19 @@ test('Null', getType(null), 'object');
 testBlock('allItemsHaveTheSameType');
 
 test(
-    'Values with the same type',
+    'All values are numbers',
     allItemsHaveTheSameType([11, 12, 13]),
     true
 );
 
 test(
-    'Values with various types',
+    'All values are strings',
+    allItemsHaveTheSameType(['11', '12', '13']),
+    true
+);
+
+test(
+    'All values are strings but wait',
     allItemsHaveTheSameType(['11', new String('12'), '13']),
     // What the result?
 );
@@ -104,7 +114,7 @@ test(
 testBlock('getTypesOfItems VS getRealTypesOfItems');
 
 const knownTypes = [
-    // Add values
+    // Add values of different types like boolean, object, date, NaN and so on
 ];
 
 test(
