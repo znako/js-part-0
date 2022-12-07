@@ -1,0 +1,18 @@
+{
+  "name": "js-part-0",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ipetropolsky/js-part-0.git",
+  "author": "'Ivan Petropolsky' <i.petropolsky@hh.ru>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "ln -sf $(pwd)/githooks/* .git/hooks"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "lint-staged": "13.1.0",
+    "prettier": "2.8.0"
+  }
+}

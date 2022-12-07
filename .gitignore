@@ -25,3 +25,6 @@ Desktop.ini
 .ropeproject
 .cov2emacs.log
 .coverage
+
+node_modules
+yarn-error.log
