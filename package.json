@@ -9,7 +9,7 @@
     "postinstall": "ln -sf $(pwd)/githooks/* .git/hooks"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
+    "eslint": "8.29.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "lint-staged": "13.1.0",
