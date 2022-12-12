@@ -18,11 +18,6 @@
 6) Проверьте, что нет ошибок и ворнингов: `yarn eslint .`
 7) Сделайте пулл-реквест *в своём репозитории*, поставьте меня ревьювером и скиньте линк на него.
 
-### Примечания
-
-Некоторые правила `eslint`, которые мы обычно используем, отключены для удобства разработки.
-Например, [`no-unused-vars`](https://eslint.org/docs/latest/rules/no-unused-vars), [`no-console`](https://eslint.org/docs/latest/rules/no-console), [`no-new-wrappers`](https://eslint.org/docs/latest/rules/no-new-wrappers).
-
 ### Важно
 
 Можно пользоваться чем угодно, главное не списывать у коллег. А вот обсуждать варианты решений — пожалуйста, это всегда полезно.
@@ -39,6 +34,12 @@
 * Включите в своём редакторе ESLint, отключите JSHint и другие линтеры.
 * Запускайте код в терминале: `node index.js` (это удобно).
 * Добавьте недостающих тестов на своё усмотрение (отдельным коммитом).
+
+Некоторые правила `eslint`, которые мы обычно используем, отключены для удобства разработки.
+Например, [`no-unused-vars`](https://eslint.org/docs/latest/rules/no-unused-vars), [`no-console`](https://eslint.org/docs/latest/rules/no-console), [`no-new-wrappers`](https://eslint.org/docs/latest/rules/no-new-wrappers).
+
+### См. также:
+* [Install Node.js on Windows Subsystem for Linux (WSL2)](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl)
 
 ## Что должно получиться
 
