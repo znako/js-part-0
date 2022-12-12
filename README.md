@@ -18,7 +18,7 @@
 6) Проверьте, что нет ошибок и ворнингов: `yarn eslint .`
 7) Сделайте пулл-реквест *в своём репозитории*, поставьте меня ревьювером и скиньте линк на него.
 
-## Примечания
+### Примечания
 
 Некоторые правила `eslint`, которые мы обычно используем, отключены для удобства разработки.
 Например, [`no-unused-vars`](https://eslint.org/docs/latest/rules/no-unused-vars), [`no-console`](https://eslint.org/docs/latest/rules/no-console), [`no-new-wrappers`](https://eslint.org/docs/latest/rules/no-new-wrappers).
