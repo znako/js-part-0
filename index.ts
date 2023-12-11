@@ -119,6 +119,58 @@ const countRealTypes = (arr: Array<allTypes>): Array<[string, number]> => {
 
 // Tests
 
+testBlock('areEqual');
+
+// primitives
+test('Equal numbers', areEqual(1, 1), true);
+test('Not equal numbers', areEqual(1, 2), false);
+test('Equal strings', areEqual('HeadHunter', 'HeadHunter'), true);
+test('Not equal strings', areEqual('HeadHunter', 'HH'), false);
+test('Equal booleans', areEqual(true, true), true);
+test('Not equal booleans', areEqual(true, false), false);
+
+// arrays
+test('Equal arrays of numbers', areEqual([1, 2, 3], [1, 2, 3]), true);
+test('Not equal arrays of numbers', areEqual([1, 1, 1], [1, 2, 3]), false);
+test('Equal arrays of strings', areEqual(['a', 'bc', 'def'], ['a', 'bc', 'def']), true);
+test('Not equal arrays of strings', areEqual(['a', 'a', 'def'], ['a', 'bc', 'def']), false);
+test('Arrays have different lengths', areEqual(['a', 'bc'], ['a', 'bc', 'def']), false);
+test('Empty arrays', areEqual([], []), true);
+
+// arrays in array
+test(
+    'Equal nested arrays',
+    areEqual(
+        [
+            ['string', 1],
+            ['string', 2],
+            ['boolean', 4],
+        ],
+        [
+            ['string', 1],
+            ['string', 2],
+            ['boolean', 4],
+        ]
+    ),
+    true
+);
+test(
+    'Not equal nested arrays',
+    areEqual(
+        [
+            ['string', 1],
+            ['strings', 2],
+            ['boolean', 4],
+        ],
+        [
+            ['string', 1],
+            ['string', 2],
+            ['boolean', 4],
+        ]
+    ),
+    false
+);
+
 testBlock('getType');
 
 test('Boolean', getType(true), 'boolean');
@@ -145,11 +197,15 @@ test('All values are strings but wait', allItemsHaveTheSameType(['11', new Strin
 // @ts-ignore: 123 / 'a' is an expected error
 test('Values like a number', allItemsHaveTheSameType([123, 123 / 'a', 1 / 0]), true);
 
-test('Values like an object', allItemsHaveTheSameType([{}]), true);
+test('One value - object', allItemsHaveTheSameType([{}]), true);
+
+test('Values like an object', allItemsHaveTheSameType([{}, [1, 2, 3], new Set(), null]), true);
+
+test('No values', allItemsHaveTheSameType([]), true);
 
 testBlock('getTypesOfItems VS getRealTypesOfItems');
 
-const knownTypes: Array<allTypes> = [
+const knownTypes = [
     // Add values of different types like boolean, object, date, NaN and so on
     true,
     1337,
@@ -162,7 +218,7 @@ const knownTypes: Array<allTypes> = [
     NaN,
     Infinity,
     new Date(),
-    new RegExp('\D'),
+    new RegExp('D'),
     new Set([1, 1, 1, 1]),
     BigInt(Number.MAX_SAFE_INTEGER),
     Symbol('👻'),
@@ -209,10 +265,18 @@ testBlock('everyItemHasAUniqueRealType');
 
 test('All value types in the array are unique', everyItemHasAUniqueRealType([true, 123, '123']), true);
 
+test(
+    'All value types in the array are same',
+    everyItemHasAUniqueRealType([true, typeof 123 === 'number', Boolean([])]),
+    false
+);
+
 // @ts-ignore: '123' === 123 is an expected error
 test('Two values have the same type', everyItemHasAUniqueRealType([true, 123, '123' === 123]), false);
 
 test('There are no repeated types in knownTypes', everyItemHasAUniqueRealType(knownTypes), true);
+
+test('No values', everyItemHasAUniqueRealType([]), true);
 
 testBlock('countRealTypes');
 
@@ -222,10 +286,28 @@ test('Count unique types of array items', countRealTypes([true, null, !null, !!n
     ['object', 1],
 ]);
 
-test('Counted unique types are sorted', countRealTypes([{}, null, true, !null, !!null]), [
+test('The array items are sorted in ascending order', countRealTypes([true, !null, !!null, null, {}]), [
     ['boolean', 3],
     ['null', 1],
     ['object', 1],
 ]);
+
+test('The array items are sorted in descending order', countRealTypes([{}, null, true, !null, !!null]), [
+    ['boolean', 3],
+    ['null', 1],
+    ['object', 1],
+]);
+
+test('The array items are not sorted', countRealTypes([null, true, {}, !null, !!null]), [
+    ['boolean', 3],
+    ['null', 1],
+    ['object', 1],
+]);
+
+test('The array has only items with the same type', countRealTypes([true, false, Boolean({}), !null, !!null]), [
+    ['boolean', 5],
+]);
+
+test('No values', countRealTypes([]), []);
 
 // Add several positive and negative tests
