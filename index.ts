@@ -1,19 +1,23 @@
-'use strict';
-
 // Test utils
+type primitives = undefined | boolean | number | string | bigint | symbol | null;
+type allTypes = primitives | object;
 
-const testBlock = (name) => {
+const testBlock = (name: string): void => {
     console.groupEnd();
     console.group(`# ${name}\n`);
 };
 
-const areEqual = (a, b) => {
+const areEqual = (
+    a: primitives | Array<primitives> | Array<[string, number]>,
+    b: primitives | Array<primitives> | Array<[string, number]>
+): boolean => {
     // Compare arrays of primitives
     // Remember: [] !== []
     if (Array.isArray(a) && Array.isArray(b)) {
         if (a.length !== b.length) {
             return false;
         }
+
         const aFlatted = a.flat(1);
         const bFlatted = b.flat(1);
         for (let i = 0; i < aFlatted.length; i++) {
@@ -24,9 +28,13 @@ const areEqual = (a, b) => {
         return true;
     }
     return a === b;
-};
+}
 
-const test = (whatWeTest, actualResult, expectedResult) => {
+const test = (
+    whatWeTest: string,
+    actualResult: primitives | Array<primitives> | Array<[string, number]>,
+    expectedResult: primitives | Array<primitives> | Array<[string, number]>
+): void => {
     if (areEqual(actualResult, expectedResult)) {
         console.log(`[OK] ${whatWeTest}\n`);
     } else {
@@ -37,26 +45,26 @@ const test = (whatWeTest, actualResult, expectedResult) => {
         console.debug(actualResult);
         console.log('');
     }
-};
+}
 
 // Functions
 
-const getType = (value) => {
+const getType = (value: allTypes): string => {
     // Return string with a native JS type of value
     return typeof value;
 };
 
-const getTypesOfItems = (arr) => {
+const getTypesOfItems = (arr: Array<allTypes>): Array<string> => {
     // Return array with types of items of given array
     return arr.map(getType);
 };
 
-const allItemsHaveTheSameType = (arr) => {
+const allItemsHaveTheSameType = (arr: Array<allTypes>): boolean => {
     // Return true if all items of array have the same type
     return !arr.some((val, _, arr) => typeof val !== typeof arr[0]);
 };
 
-const getRealType = (value) => {
+const getRealType = (value: allTypes): string => {
     // Return string with a “real” type of value.
     // For example:
     //     typeof new Date()       // 'object'
@@ -77,32 +85,35 @@ const getRealType = (value) => {
     return Object.getPrototypeOf(value).constructor.name.toLowerCase();
 };
 
-const getRealTypesOfItems = (arr) => {
+const getRealTypesOfItems = (arr: Array<allTypes>): Array<string> => {
     // Return array with real types of items of given array
     return arr.map(getRealType);
 };
 
-const everyItemHasAUniqueRealType = (arr) => {
+const everyItemHasAUniqueRealType = (arr: Array<allTypes>): boolean => {
     // Return true if there are no items in array
     // with the same real type
     const uniqueTypes = new Set(getRealTypesOfItems(arr));
     return [...uniqueTypes].length === arr.length;
 };
 
-const countRealTypes = (arr) => {
+const countRealTypes = (arr: Array<allTypes>): Array<[string, number]> => {
     // Return an array of arrays with a type and count of items
     // with this type in the input array, sorted by type.
     // Like an Object.entries() result: [['boolean', 3], ['string', 5]]
     const realTypes = getRealTypesOfItems(arr);
     const sortedRealTypes = realTypes.sort((a, b) => (a <= b ? -1 : 1));
-    const countRealTypes = [];
+
+    const countRealTypes: Array<[string, number]> = [];
     for (let i = 0; i < sortedRealTypes.length; i++) {
         if (!countRealTypes.length || sortedRealTypes[i] !== countRealTypes[countRealTypes.length - 1][0]) {
             countRealTypes.push([sortedRealTypes[i], 1]);
-        } else {
+        }
+        else {
             countRealTypes[countRealTypes.length - 1][1] += 1;
         }
     }
+
     return countRealTypes;
 };
 
@@ -138,7 +149,7 @@ test('Values like an object', allItemsHaveTheSameType([{}]), true);
 
 testBlock('getTypesOfItems VS getRealTypesOfItems');
 
-const knownTypes = [
+const knownTypes: Array<allTypes> = [
     // Add values of different types like boolean, object, date, NaN and so on
     true,
     1337,
@@ -151,7 +162,7 @@ const knownTypes = [
     NaN,
     Infinity,
     new Date(),
-    new RegExp('D'),
+    new RegExp('\D'),
     new Set([1, 1, 1, 1]),
     BigInt(Number.MAX_SAFE_INTEGER),
     Symbol('👻'),
