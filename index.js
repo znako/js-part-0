@@ -183,7 +183,7 @@ test('All values are strings', allItemsHaveTheSameType(['11', '12', '13']), true
 
 test('All values are strings but wait', allItemsHaveTheSameType(['11', new String('12'), '13']), false);
 
-// @ts-ignore: 123 / 'a' is an expected error
+// @ts-expect-error: 123 / 'a' is an expected error
 test('Values like a number', allItemsHaveTheSameType([123, 123 / 'a', 1 / 0]), true);
 
 test('One value - object', allItemsHaveTheSameType([{}]), true);
@@ -260,7 +260,7 @@ test(
     false
 );
 
-// @ts-ignore: '123' === 123 is an expected error
+// @ts-expect-error: '123' === 123 is an expected error
 test('Two values have the same type', everyItemHasAUniqueRealType([true, 123, '123' === 123]), false);
 
 test('There are no repeated types in knownTypes', everyItemHasAUniqueRealType(knownTypes), true);

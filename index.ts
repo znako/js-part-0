@@ -1,16 +1,14 @@
 // Test utils
 type primitives = undefined | boolean | number | string | bigint | symbol | null;
 type allTypes = primitives | object;
+type areEqualArgumentsType = primitives | Array<primitives> | Array<[string, number]>;
 
 const testBlock = (name: string): void => {
     console.groupEnd();
     console.group(`# ${name}\n`);
 };
 
-const areEqual = (
-    a: primitives | Array<primitives> | Array<[string, number]>,
-    b: primitives | Array<primitives> | Array<[string, number]>
-): boolean => {
+const areEqual = (a: areEqualArgumentsType, b: areEqualArgumentsType): boolean => {
     // Compare arrays of primitives
     // Remember: [] !== []
     if (Array.isArray(a) && Array.isArray(b)) {
@@ -32,8 +30,8 @@ const areEqual = (
 
 const test = (
     whatWeTest: string,
-    actualResult: primitives | Array<primitives> | Array<[string, number]>,
-    expectedResult: primitives | Array<primitives> | Array<[string, number]>
+    actualResult: areEqualArgumentsType,
+    expectedResult: areEqualArgumentsType
 ): void => {
     if (areEqual(actualResult, expectedResult)) {
         console.log(`[OK] ${whatWeTest}\n`);
@@ -194,7 +192,7 @@ test('All values are strings', allItemsHaveTheSameType(['11', '12', '13']), true
 
 test('All values are strings but wait', allItemsHaveTheSameType(['11', new String('12'), '13']), false);
 
-// @ts-ignore: 123 / 'a' is an expected error
+// @ts-expect-error: 123 / 'a' is an expected error
 test('Values like a number', allItemsHaveTheSameType([123, 123 / 'a', 1 / 0]), true);
 
 test('One value - object', allItemsHaveTheSameType([{}]), true);
@@ -271,7 +269,7 @@ test(
     false
 );
 
-// @ts-ignore: '123' === 123 is an expected error
+// @ts-expect-error: '123' === 123 is an expected error
 test('Two values have the same type', everyItemHasAUniqueRealType([true, 123, '123' === 123]), false);
 
 test('There are no repeated types in knownTypes', everyItemHasAUniqueRealType(knownTypes), true);
